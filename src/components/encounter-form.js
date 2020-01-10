@@ -18,7 +18,6 @@ export default function EncounterForm({
 
   return (
     <View>
-      <Text>Starting off with this.</Text>
       <TextInput 
         keyboardType={'number-pad'} 
         maxLength={2}
