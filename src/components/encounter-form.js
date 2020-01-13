@@ -1,7 +1,9 @@
 import React from 'react';
-import { Button, StyleSheet, Text, View, TextInput, Picker, Slider, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Slider } from 'react-native';
 import PropTypes from 'prop-types';
 import { Dropdown } from 'react-native-material-dropdown';
+import PageTitle from './page-title';
+import LargeButton from './large-button';
 
 export default function EncounterForm({
   numberOfPlayers = 4,
@@ -46,11 +48,10 @@ export default function EncounterForm({
 
   return (
     <View style={styles.container}>
-      <View style={[styles.titleSection, styles.formItem]}>
-        <Text style={styles.title}>Roll Up!</Text>
-        <Text style={styles.subtitle}>Generate your encounter</Text>
-        <View style={styles.divider} />
-      </View>
+      <PageTitle
+        title={'Roll Up!'}
+        subtitle={'Generate your encounter'}
+      />
       <TextInput 
         keyboardType={'number-pad'} 
         maxLength={2}
@@ -81,12 +82,10 @@ export default function EncounterForm({
         data={enemyTypeData}
         style={[styles.dropdown, styles.formItem]}
       />
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => onSubmit()}
-      >
-        <Text style={styles.buttonText}>Generate</Text>
-      </TouchableOpacity>
+      <LargeButton 
+        title={'Generate'}
+        onPress={onSubmit}
+      />
     </View>
   );
 }
@@ -109,42 +108,7 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     paddingBottom: 0,
   },
-  titleSection: {
-    alignItems: 'center',
-    marginBottom: 15,
-  },
   formItem: {
     marginBottom: 18,
-  },
-  title: {
-    fontSize: 55,
-    fontWeight: '800',
-    // fontFamily: 'nodesto-caps-condensed',
-    color: '#58170D',
-  },
-  subtitle: {
-    fontSize: 16,
-    fontWeight: '500',
-    fontStyle: 'italic',
-    marginBottom: 6,
-  },
-  divider: {
-    height: 3,
-    width: '100%',
-    backgroundColor: '#C9AD6A',
-  },
-  button: {
-    alignSelf: 'center',
-    backgroundColor: '#58170D',
-    width: '80%',
-    borderRadius: 8,
-    marginTop: 20,
-  },
-  buttonText: {
-    alignSelf: 'center',
-    padding: 20,
-    fontSize: 24,
-    fontWeight: '600',
-    color: 'white',
   },
 });

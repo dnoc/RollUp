@@ -1,38 +1,54 @@
 import React from 'react';
-import { Button, StyleSheet, Text, View, FlatList } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import PropTypes from 'prop-types';
+import PageTitle from './page-title';
+import MonsterList from './monster-list';
+import LargeButton from './large-button';
+import BackButton from './back-button';
+import Overview from './overview';
 
 export default function EncounterResult({ monsters, difficulty, experienceTotal, experiencePerPlayer }) {
   const regenerateResult = () => {
     console.log("Regen! Still TODO");
-  }
+  };
 
-  const renderMonster = (monster) => {
-    return (
-      <View>
-        <Text>{monster.name}</Text>
-        <Text>{monster.size} {monster.type}</Text>
-        <Text>CR {monster.cr}</Text>
-        <Text>Description: {monster.link}</Text>
-      </View>
-    );
+  const goBack = () => {
+    console.log("Go back! still TODO");
   };
   
   return (
-    <View>
-      <FlatList
-        data={monsters}
-        renderItem={renderMonster}
+    <View style={styles.container}>
+      <BackButton 
+        onPress={goBack}
+        buttonStyles={styles.backButton}
       />
-      <Text>Difficulty: {difficulty}</Text>
-      <Text>Encounter Experience: {experienceTotal}</Text>
-      <Text>Per Player: {experiencePerPlayer}</Text>
-      <Button title={'Regenerate'} onClick={regenerateResult}/>
+      <PageTitle title={'Results'}/>
+      <Overview 
+        difficulty={difficulty}
+        experienceTotal={experienceTotal}
+        experiencePerPlayer={experiencePerPlayer}
+      />
+      <MonsterList monsterList={monsters}/>
+      <LargeButton title={'Regenerate'} onPress={regenerateResult}/>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    height: '100%',
+    width: '100%',
+    paddingTop: 60,
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingBottom: 0,
+  },
+  backButton: {
+    position: 'absolute',
+    top: 82,
+    left: 25,
+    zIndex: 100,
+  },
 });
 
 // TODO use redux
