@@ -1,51 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Slider } from 'react-native';
 import PropTypes from 'prop-types';
 import { Dropdown } from 'react-native-material-dropdown';
 import PageTitle from './page-title';
 import LargeButton from './large-button';
+import { connect } from 'react-redux';
+import { createEncounter } from '../state/actions';
+import { difficultyData, settingData, enemyTypeData } from '../constants';
 
-export default function EncounterForm({
-  numberOfPlayers = 4,
-  playerLevel = 1,
-  difficulty = 'medium',
-  setting,
-  enemyType,
+export function EncounterForm({
+  request,
+  dispatchEncounterCreated,
 }) {
 
-  const difficultyData = [
-    { label: 'Easy', value: 'easy', },
-    { label: 'Medium', value: 'medium', },
-    { label: 'Hard', value: 'hard', },
-    { label: 'Deadly', value: 'deadly', },
-  ];
-
-  const settingData = [
-    { label: 'City', value: 'city', },
-    { label: 'Forest', value: 'forest', },
-    { label: 'Mountain', value: 'mountain', },
-    { label: 'Ocean', value: 'ocean', },
-    { label: 'Dungeon', value: 'dungeon', },
-  ];
-
-  const enemyTypeData = [
-    { label: 'Aberration', value: 'aberration', },
-    { label: 'Beast', value: 'beast', },
-    { label: 'Celestial', value: 'celestial', },
-    { label: 'Dragon', value: 'dragon', },
-    { label: 'Elemental', value: 'elemental', },
-    { label: 'Fiend', value: 'fiend', },
-    { label: 'Fey', value: 'fey', },
-    { label: 'Giant', value: 'giant', },
-    { label: 'Humanoid', value: 'humanoid', },
-    { label: 'Undead', value: 'undead', },
-    { label: 'Monstrosity', value: 'monstrosity', },
-  ];
+  const [numberOfPlayers, setNumberOfPlayers] = useState(request.numberOfPlayers);
+  const [playerLevel, setPlayerLevel] = useState(request.playerLevel);
+  const [difficulty, setDifficulty] = useState(request.difficulty);
+  const [setting, setSetting] = useState(request.setting);
+  const [enemyType, setEnemyType] = useState(request.enemyType);
   
   const onSubmit = (event) => {
     console.log("submitted", event);
+    
+    const newRequest = {
+      numberOfPlayers: numberOfPlayers,
+      playerLevel: playerLevel,
+      difficulty: difficulty,
+      setting: setting,
+      enemyType: enemyType,
+    };
+    dispatchEncounterCreated(newRequest);
+    // TODO callback to navigate to results
   };
 
+  // TODO use onChange={setState}
   return (
     <View style={styles.container}>
       <PageTitle
@@ -61,7 +49,6 @@ export default function EncounterForm({
       <View style={styles.formItem}>
         <Text>Character Level</Text>
         <Slider
-          value={playerLevel}
           minimumValue={1}
           maximumValue={20}
           style={styles.level}
@@ -90,13 +77,9 @@ export default function EncounterForm({
   );
 }
 
-// TODO use redux
 EncounterForm.propTypes = {
-  numberOfPlayers: PropTypes.number,
-  playerLevel: PropTypes.number,
-  difficulty: PropTypes.string,
-  setting: PropTypes.string,
-  enemyType: PropTypes.string,
+  request: PropTypes.object.isRequired,
+  dispatchEncounterCreated: PropTypes.func.isRequired,
 };
 
 const styles = StyleSheet.create({
@@ -112,3 +95,12 @@ const styles = StyleSheet.create({
     marginBottom: 18,
   },
 });
+
+export default connect(
+  (state) => ({
+    request: state.request,
+  }),
+  (dispatch) => ({
+    dispatchEncounterCreated: (request) => dispatch(createEncounter(request)),
+  })
+)(EncounterForm);

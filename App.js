@@ -4,7 +4,15 @@ import EncounterForm from './src/components/encounter-form';
 import EncounterResult from './src/components/encounter-result';
 import SimpleSample from './src/components/simple-sample';
 import StainBackground from './assets/stain-background.png';
+import { mockData } from './src/constants';
 import * as Font from 'expo-font';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+
+const rootReducer = (state = {}, action) => {
+  return state;
+};
+const store = createStore(rootReducer);
 
 export default function App() {
   useEffect(() => {
@@ -17,54 +25,24 @@ export default function App() {
     });
   }
 
-  const mockData = {
-    monsters: [
-      {
-        name: 'Bandit',
-        cr: '1/8',
-        page: 'Monster Manual p.343',
-        size: 'Medium',
-        type: 'Humanoid',
-        xp: 25,
-      },
-      {
-        name: 'Bugbear',
-        cr: '1',
-        page: 'Monster Manual p.33',
-        size: 'Medium',
-        type: 'Humanoid',
-        xp: 200,
-      },
-      {
-        name: 'Duergar',
-        cr: '1',
-        page: 'Monster Manual p.33',
-        size: 'Medium',
-        type: 'Humanoid',
-        xp: 200,
-      },
-    ],
-    difficulty: 'deadly',
-    experienceTotal: 425,
-    experiencePerPlayer: 106,
-  };
-
   return (
-    <ImageBackground
-      source={StainBackground}
-      style={{width: '100%', height: '100%'}}
-    >
-      <View style={styles.container}>
-        <EncounterForm />
-        {/* <SimpleSample /> */}
-        {/* <EncounterResult 
-          monsters={mockData.monsters}
-          difficulty={mockData.difficulty}
-          experienceTotal={mockData.experienceTotal}
-          experiencePerPlayer={mockData.experiencePerPlayer}
-        /> */}
-      </View>
-    </ImageBackground>
+    <Provider store={store}>
+      <ImageBackground
+        source={StainBackground}
+        style={{width: '100%', height: '100%'}}
+      >
+        <View style={styles.container}>
+          <EncounterForm />
+          {/* <SimpleSample /> */}
+          {/* <EncounterResult 
+            monsters={mockData.monsters}
+            difficulty={mockData.difficulty}
+            experienceTotal={mockData.experienceTotal}
+            experiencePerPlayer={mockData.experiencePerPlayer}
+          /> */}
+        </View>
+      </ImageBackground>
+    </Provider>
   );
 }
 

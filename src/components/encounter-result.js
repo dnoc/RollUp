@@ -1,15 +1,22 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import PropTypes from 'prop-types';
 import PageTitle from './page-title';
 import MonsterList from './monster-list';
 import LargeButton from './large-button';
 import BackButton from './back-button';
 import Overview from './overview';
+import { connect } from 'react-redux';
+import { createEncounter } from '../state/actions';
 
-export default function EncounterResult({ monsters, difficulty, experienceTotal, experiencePerPlayer }) {
+export function EncounterResult({ 
+  request,
+  result,
+  dispatchRecreateEncounter,
+ }) {
   const regenerateResult = () => {
     console.log("Regen! Still TODO");
+    dispatchRecreateEncounter(request);
   };
 
   const goBack = () => {
@@ -24,11 +31,11 @@ export default function EncounterResult({ monsters, difficulty, experienceTotal,
       />
       <PageTitle title={'Results'}/>
       <Overview 
-        difficulty={difficulty}
-        experienceTotal={experienceTotal}
-        experiencePerPlayer={experiencePerPlayer}
+        difficulty={result.difficulty}
+        experienceTotal={result.experienceTotal}
+        experiencePerPlayer={result.experiencePerPlayer}
       />
-      <MonsterList monsterList={monsters}/>
+      <MonsterList monsterList={result.monsters}/>
       <LargeButton title={'Regenerate'} onPress={regenerateResult}/>
     </View>
   );
@@ -51,10 +58,18 @@ const styles = StyleSheet.create({
   },
 });
 
-// TODO use redux
 EncounterResult.propTypes = {
-  monsters: PropTypes.arrayOf(PropTypes.object).isRequired,
-  difficulty: PropTypes.string.isRequired,
-  experienceTotal: PropTypes.number.isRequired,
-  experiencePerPlayer: PropTypes.number.isRequired,
+  request: PropTypes.object.isRequired,
+  result: PropTypes.object.isRequired,
+  dispatchRecreateEncounter: PropTypes.func.isRequired,
 };
+
+export default connect(
+  (state) => ({
+    request: state.request,
+    result: state.result,
+  }),
+  (dispatch) => ({
+    dispatchRecreateEncounter: (request) => dispatch(createEncounter(request)),
+  })
+)(EncounterResult);
