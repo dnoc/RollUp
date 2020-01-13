@@ -1,6 +1,7 @@
 import React from 'react';
-import { Button, StyleSheet, Text, View, TextInput, Picker } from 'react-native';
+import { Button, StyleSheet, Text, View, TextInput, Picker, Slider, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
+import { Dropdown } from 'react-native-material-dropdown';
 
 export default function EncounterForm({
   numberOfPlayers = 4,
@@ -9,65 +10,83 @@ export default function EncounterForm({
   setting,
   enemyType,
 }) {
-  // it'd be insane if there's not an easier way to do this in js
-  const levelRange = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+
+  const difficultyData = [
+    { label: 'Easy', value: 'easy', },
+    { label: 'Medium', value: 'medium', },
+    { label: 'Hard', value: 'hard', },
+    { label: 'Deadly', value: 'deadly', },
+  ];
+
+  const settingData = [
+    { label: 'City', value: 'city', },
+    { label: 'Forest', value: 'forest', },
+    { label: 'Mountain', value: 'mountain', },
+    { label: 'Ocean', value: 'ocean', },
+    { label: 'Dungeon', value: 'dungeon', },
+  ];
+
+  const enemyTypeData = [
+    { label: 'Aberration', value: 'aberration', },
+    { label: 'Beast', value: 'beast', },
+    { label: 'Celestial', value: 'celestial', },
+    { label: 'Dragon', value: 'dragon', },
+    { label: 'Elemental', value: 'elemental', },
+    { label: 'Fiend', value: 'fiend', },
+    { label: 'Fey', value: 'fey', },
+    { label: 'Giant', value: 'giant', },
+    { label: 'Humanoid', value: 'humanoid', },
+    { label: 'Undead', value: 'undead', },
+    { label: 'Monstrosity', value: 'monstrosity', },
+  ];
   
   const onSubmit = (event) => {
     console.log("submitted", event);
   };
 
   return (
-    <View>
+    <View style={styles.container}>
+      <View style={[styles.titleSection, styles.formItem]}>
+        <Text style={styles.title}>Roll Up!</Text>
+        <Text style={styles.subtitle}>Generate your encounter</Text>
+        <View style={styles.divider} />
+      </View>
       <TextInput 
         keyboardType={'number-pad'} 
         maxLength={2}
         placeholder={'Number of players'}
+        style={[styles.players, styles.formItem]}
       />
-      {/* <Picker
-        selectedValue={playerLevel}
-        placeholder={'Character level'}
-      >
-        {levelRange.map((number) => {<Picker.Item label={number} value={number} key={number}/>})}
-      </Picker> */}
-      <Picker
-        selectedValue={difficulty}
-        placeholder={'Difficulty'}
-      >
-        <Picker.Item label={'Easy'} value={'easy'}/>
-        <Picker.Item label={'Medium'} value={'medium'}/>
-        <Picker.Item label={'Hard'} value={'hard'}/>
-        <Picker.Item label={'Deadly'} value={'deadly'}/>
-      </Picker>
-      <Picker
-        selectedValue={setting}
-        placeholder={'Encounter setting'}
-      >
-        <Picker.Item label={'City'} value={'city'}/>
-        <Picker.Item label={'Forest'} value={'forest'}/>
-        <Picker.Item label={'Mountain'} value={'mountain'}/>
-        <Picker.Item label={'Ocean'} value={'ocean'}/>
-        <Picker.Item label={'Dungeon'} value={'dungeon'}/>
-      </Picker>
-      <Picker
-        selectedValue={enemyType}
-        placeholder={'Enemy type'}
-      >
-        <Picker.Item label={'Aberration'} value={'aberration'}/>
-        <Picker.Item label={'Beast'} value={'beast'}/>
-        <Picker.Item label={'Celestial'} value={'celestial'}/>
-        <Picker.Item label={'Dragon'} value={'dragon'}/>
-        <Picker.Item label={'Elemental'} value={'elemental'}/>
-        <Picker.Item label={'Fiend'} value={'fiend'}/>
-        <Picker.Item label={'Fey'} value={'fey'}/>
-        <Picker.Item label={'Giant'} value={'giant'}/>
-        <Picker.Item label={'Humanoid'} value={'humanoid'}/>
-        <Picker.Item label={'Undead'} value={'undead'}/>
-        <Picker.Item label={'Monstrosity'} value={'monstrosity'}/>
-      </Picker>
-      <Button
-        title={'Generate'} 
+      <View style={styles.formItem}>
+        <Text>Character Level</Text>
+        <Slider
+          value={playerLevel}
+          minimumValue={1}
+          maximumValue={20}
+          style={styles.level}
+        />
+      </View>
+      <Dropdown
+        label={'Difficulty'}
+        data={difficultyData}
+        style={[styles.dropdown, styles.formItem]}
+      />
+      <Dropdown
+        label={'Encounter Setting'}
+        data={settingData}
+        style={[styles.dropdown, styles.formItem]}
+      />
+      <Dropdown
+        label={'Enemy Type'}
+        data={enemyTypeData}
+        style={[styles.dropdown, styles.formItem]}
+      />
+      <TouchableOpacity
+        style={styles.button}
         onPress={() => onSubmit()}
-      />
+      >
+        <Text style={styles.buttonText}>Generate</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -82,4 +101,50 @@ EncounterForm.propTypes = {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    height: '100%',
+    width: '100%',
+    paddingTop: 60,
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingBottom: 0,
+  },
+  titleSection: {
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  formItem: {
+    marginBottom: 18,
+  },
+  title: {
+    fontSize: 55,
+    fontWeight: '800',
+    // fontFamily: 'nodesto-caps-condensed',
+    color: '#58170D',
+  },
+  subtitle: {
+    fontSize: 16,
+    fontWeight: '500',
+    fontStyle: 'italic',
+    marginBottom: 6,
+  },
+  divider: {
+    height: 3,
+    width: '100%',
+    backgroundColor: '#C9AD6A',
+  },
+  button: {
+    alignSelf: 'center',
+    backgroundColor: '#58170D',
+    width: '80%',
+    borderRadius: 8,
+    marginTop: 20,
+  },
+  buttonText: {
+    alignSelf: 'center',
+    padding: 20,
+    fontSize: 24,
+    fontWeight: '600',
+    color: 'white',
+  },
 });
