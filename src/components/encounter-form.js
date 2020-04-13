@@ -7,12 +7,15 @@ import LargeButton from './large-button';
 import { connect } from 'react-redux';
 import { createEncounter } from '../state/actions';
 import { difficultyData, settingData, enemyTypeData } from '../constants';
+import { ScreenWrapper } from './screen-wrapper';
 
 export function EncounterForm({
+  navigation,
   request,
   dispatchEncounterCreated,
 }) {
 
+  const [submitDisabled, setSubmitDisabled] = useState(false);
   const [numberOfPlayers, setNumberOfPlayers] = useState(request.numberOfPlayers);
   const [playerLevel, setPlayerLevel] = useState(request.playerLevel);
   const [difficulty, setDifficulty] = useState(request.difficulty);
@@ -21,6 +24,7 @@ export function EncounterForm({
   
   const onSubmit = (event) => {
     console.log("submitted", event);
+    setSubmitDisabled(true);
     
     const newRequest = {
       numberOfPlayers: numberOfPlayers,
@@ -30,54 +34,58 @@ export function EncounterForm({
       enemyType: enemyType,
     };
     dispatchEncounterCreated(newRequest);
-    // TODO callback to navigate to results
+    navigation.navigate('result');
   };
 
   // TODO use onChange={setState}
   return (
-    <View style={styles.container}>
-      <PageTitle
-        title={'Roll Up!'}
-        subtitle={'Generate your encounter'}
-      />
-      <TextInput 
-        keyboardType={'number-pad'} 
-        maxLength={2}
-        placeholder={'Number of players'}
-        style={[styles.players, styles.formItem]}
-      />
-      <View style={styles.formItem}>
-        <Text>Character Level</Text>
-        <Slider
-          minimumValue={1}
-          maximumValue={20}
-          style={styles.level}
+    <ScreenWrapper>
+      <View style={styles.container}>
+        <PageTitle
+          title={'Roll Up!'}
+          subtitle={'Generate your encounter'}
+        />
+        <TextInput 
+          keyboardType={'number-pad'} 
+          maxLength={2}
+          placeholder={'Number of players'}
+          style={[styles.players, styles.formItem]}
+        />
+        <View style={styles.formItem}>
+          <Text>Character Level</Text>
+          <Slider
+            minimumValue={1}
+            maximumValue={20}
+            style={styles.level}
+          />
+        </View>
+        <Dropdown
+          label={'Difficulty'}
+          data={difficultyData}
+          style={[styles.dropdown, styles.formItem]}
+        />
+        <Dropdown
+          label={'Encounter Setting'}
+          data={settingData}
+          style={[styles.dropdown, styles.formItem]}
+        />
+        <Dropdown
+          label={'Enemy Type'}
+          data={enemyTypeData}
+          style={[styles.dropdown, styles.formItem]}
+        />
+        <LargeButton
+          disabled={submitDisabled}
+          title={'Generate'}
+          onPress={onSubmit}
         />
       </View>
-      <Dropdown
-        label={'Difficulty'}
-        data={difficultyData}
-        style={[styles.dropdown, styles.formItem]}
-      />
-      <Dropdown
-        label={'Encounter Setting'}
-        data={settingData}
-        style={[styles.dropdown, styles.formItem]}
-      />
-      <Dropdown
-        label={'Enemy Type'}
-        data={enemyTypeData}
-        style={[styles.dropdown, styles.formItem]}
-      />
-      <LargeButton 
-        title={'Generate'}
-        onPress={onSubmit}
-      />
-    </View>
+    </ScreenWrapper>
   );
 }
 
 EncounterForm.propTypes = {
+  navigation: PropTypes.object.isRequired,
   request: PropTypes.object.isRequired,
   dispatchEncounterCreated: PropTypes.func.isRequired,
 };

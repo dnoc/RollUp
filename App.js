@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, View, ImageBackground } from 'react-native';
 import EncounterForm from './src/components/encounter-form';
 import EncounterResult from './src/components/encounter-result';
 import SimpleSample from './src/components/simple-sample';
-import StainBackground from './assets/stain-background.png';
-import { mockData } from './src/constants';
 import * as Font from 'expo-font';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 const rootReducer = (state = {}, action) => {
   return state;
@@ -25,32 +24,23 @@ export default function App() {
     });
   }
 
+  const Stack = createStackNavigator();
+  //   {
+  //   headerMode: 'none',
+  //   navigationOptions: {
+  //     headerVisible: false,
+  //   },
+  // });
+
   return (
     <Provider store={store}>
-      <ImageBackground
-        source={StainBackground}
-        style={{width: '100%', height: '100%'}}
-      >
-        <View style={styles.container}>
-          <EncounterForm />
-          {/* <SimpleSample /> */}
-          {/* <EncounterResult 
-            monsters={mockData.monsters}
-            difficulty={mockData.difficulty}
-            experienceTotal={mockData.experienceTotal}
-            experiencePerPlayer={mockData.experiencePerPlayer}
-          /> */}
-        </View>
-      </ImageBackground>
+      <NavigationContainer>
+        <Stack.Navigator  screenOptions={{ headerShown: false }} initialRouteName="sample">
+          <Stack.Screen name="sample" component={SimpleSample} />
+          <Stack.Screen name="form" component={EncounterForm} />
+          <Stack.Screen name="result" component={EncounterResult} />
+        </Stack.Navigator>
+      </NavigationContainer>
     </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'transparent',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

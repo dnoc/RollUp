@@ -8,8 +8,10 @@ import BackButton from './back-button';
 import Overview from './overview';
 import { connect } from 'react-redux';
 import { createEncounter } from '../state/actions';
+import { ScreenWrapper } from './screen-wrapper';
 
-export function EncounterResult({ 
+export function EncounterResult({
+  navigation,
   request,
   result,
   dispatchRecreateEncounter,
@@ -18,26 +20,24 @@ export function EncounterResult({
     console.log("Regen! Still TODO");
     dispatchRecreateEncounter(request);
   };
-
-  const goBack = () => {
-    console.log("Go back! still TODO");
-  };
   
   return (
-    <View style={styles.container}>
-      <BackButton 
-        onPress={goBack}
-        buttonStyles={styles.backButton}
-      />
-      <PageTitle title={'Results'}/>
-      <Overview 
-        difficulty={result.difficulty}
-        experienceTotal={result.experienceTotal}
-        experiencePerPlayer={result.experiencePerPlayer}
-      />
-      <MonsterList monsterList={result.monsters}/>
-      <LargeButton title={'Regenerate'} onPress={regenerateResult}/>
-    </View>
+    <ScreenWrapper>
+      <View style={styles.container}>
+        <BackButton 
+          onPress={() => navigation.navigate('form')}
+          buttonStyles={styles.backButton}
+        />
+        <PageTitle title={'Results'}/>
+        <Overview 
+          difficulty={result.difficulty}
+          experienceTotal={result.experienceTotal}
+          experiencePerPlayer={result.experiencePerPlayer}
+        />
+        <MonsterList monsterList={result.monsters}/>
+        <LargeButton title={'Regenerate'} onPress={regenerateResult}/>
+      </View>
+    </ScreenWrapper>
   );
 }
 
@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
 });
 
 EncounterResult.propTypes = {
+  navigation: PropTypes.object.isRequired,
   request: PropTypes.object.isRequired,
   result: PropTypes.object.isRequired,
   dispatchRecreateEncounter: PropTypes.func.isRequired,
