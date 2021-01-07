@@ -14,18 +14,17 @@ export default function PageTitle({ title, subtitle }) {
       <Divider />
     </View>
   );
-};
+}
 
 PageTitle.propTypes = {
   title: PropTypes.string.isRequired,
   subtitle: PropTypes.string,
-}
+};
 
 const styles = StyleSheet.create({
   titleSection: {
     alignItems: 'center',
     marginBottom: 15,
-    marginBottom: 18,
   },
   title: {
     fontSize: 55,

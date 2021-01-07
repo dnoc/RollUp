@@ -7,7 +7,7 @@ export default function Overview({ difficulty, experienceTotal, experiencePerPla
   const capitalize = (s) => {
     return s.charAt(0).toUpperCase() + s.slice(1);
   };
-  
+
   return (
     <View style={styles.overview}>
       <Text style={styles.heading}>

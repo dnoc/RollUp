@@ -28,14 +28,14 @@ export default function MonsterList({ monsterList }) {
   return (
     <View style={styles.container}>
       <FlatList
-        style={styles.list}
         data={monsterList}
-        renderItem={renderMonster}
         keyExtractor={(item, index) => index.toString()}
+        renderItem={renderMonster}
+        style={styles.list}
       />
     </View>
   );
-};
+}
 
 MonsterList.propTypes = {
   monsterList: PropTypes.arrayOf(PropTypes.object).isRequired,

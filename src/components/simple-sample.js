@@ -9,9 +9,9 @@ export default function SimpleSample({ navigation }) {
     <ScreenWrapper>
       <View>
         <Text>Well at least this works.</Text>
-        <LargeButton 
-          title={'To Form'}
+        <LargeButton
           onPress={() => navigation.navigate('form')}
+          title={'To Form'}
         />
       </View>
     </ScreenWrapper>
@@ -20,4 +20,4 @@ export default function SimpleSample({ navigation }) {
 
 SimpleSample.propTypes = {
   navigation: PropTypes.object.isRequired,
-}
+};

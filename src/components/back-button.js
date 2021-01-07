@@ -7,16 +7,16 @@ export default function BackButton({ onPress, buttonStyles }) {
 
   return (
     <TouchableOpacity
-      style={buttonStyles}
       onPress={() => onPress()}
+      style={buttonStyles}
     >
       <Image
-        style={styles.icon}
         source={LeftArrow}
+        style={styles.icon}
       />
     </TouchableOpacity>
   );
-};
+}
 
 BackButton.propTypes = {
   onPress: PropTypes.func.isRequired,

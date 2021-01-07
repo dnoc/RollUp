@@ -4,12 +4,10 @@ import PropTypes from 'prop-types';
 import { Dropdown } from 'react-native-material-dropdown';
 import PageTitle from './page-title';
 import LargeButton from './large-button';
-import { connect } from 'react-redux';
-import { createEncounter } from '../state/actions';
 import { difficultyData, settingData, enemyTypeData } from '../constants';
 import { ScreenWrapper } from './screen-wrapper';
 
-export function EncounterForm({
+export default function EncounterForm({
   navigation,
   request,
   dispatchEncounterCreated,
@@ -21,11 +19,11 @@ export function EncounterForm({
   const [difficulty, setDifficulty] = useState(request.difficulty);
   const [setting, setSetting] = useState(request.setting);
   const [enemyType, setEnemyType] = useState(request.enemyType);
-  
+
   const onSubmit = (event) => {
-    console.log("submitted", event);
+    console.log('submitted', event);
     setSubmitDisabled(true);
-    
+
     const newRequest = {
       numberOfPlayers: numberOfPlayers,
       playerLevel: playerLevel,
@@ -42,11 +40,11 @@ export function EncounterForm({
     <ScreenWrapper>
       <View style={styles.container}>
         <PageTitle
-          title={'Roll Up!'}
           subtitle={'Generate your encounter'}
+          title={'Roll Up!'}
         />
-        <TextInput 
-          keyboardType={'number-pad'} 
+        <TextInput
+          keyboardType={'number-pad'}
           maxLength={2}
           placeholder={'Number of players'}
           style={[styles.players, styles.formItem]}
@@ -54,30 +52,30 @@ export function EncounterForm({
         <View style={styles.formItem}>
           <Text>Character Level</Text>
           <Slider
-            minimumValue={1}
             maximumValue={20}
+            minimumValue={1}
             style={styles.level}
           />
         </View>
         <Dropdown
-          label={'Difficulty'}
           data={difficultyData}
+          label={'Difficulty'}
           style={[styles.dropdown, styles.formItem]}
         />
         <Dropdown
-          label={'Encounter Setting'}
           data={settingData}
+          label={'Encounter Setting'}
           style={[styles.dropdown, styles.formItem]}
         />
         <Dropdown
-          label={'Enemy Type'}
           data={enemyTypeData}
+          label={'Enemy Type'}
           style={[styles.dropdown, styles.formItem]}
         />
         <LargeButton
           disabled={submitDisabled}
-          title={'Generate'}
           onPress={onSubmit}
+          title={'Generate'}
         />
       </View>
     </ScreenWrapper>
@@ -103,12 +101,3 @@ const styles = StyleSheet.create({
     marginBottom: 18,
   },
 });
-
-export default connect(
-  (state) => ({
-    request: state.request,
-  }),
-  (dispatch) => ({
-    dispatchEncounterCreated: (request) => dispatch(createEncounter(request)),
-  })
-)(EncounterForm);

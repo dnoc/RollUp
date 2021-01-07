@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import StainBackground from '../../assets/stain-background.png';
 
 export function ScreenWrapper({ children }) {
-  
+
   return (
     <ImageBackground
       source={StainBackground}

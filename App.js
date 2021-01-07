@@ -1,46 +1,31 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import EncounterForm from './src/components/encounter-form';
 import EncounterResult from './src/components/encounter-result';
 import SimpleSample from './src/components/simple-sample';
-import * as Font from 'expo-font';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
+import { useFonts } from 'expo-font';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-
-const rootReducer = (state = {}, action) => {
-  return state;
-};
-const store = createStore(rootReducer);
+import AppLoading from 'expo-app-loading';
 
 export default function App() {
-  useEffect(() => {
-    loadFont();
-  }, []);
-
-  async function loadFont() {
-    await Font.loadAsync({
-      'nodesto-caps-condensed': require('./assets/fonts/Nodesto/Nodesto-Caps-Condensed.otf'),
-    });
-  }
+  const [fontsLoaded] = useFonts({
+    'nodesto-caps-condensed': require('./assets/fonts/Nodesto/Nodesto-Caps-Condensed.otf'),
+  });
 
   const Stack = createStackNavigator();
-  //   {
-  //   headerMode: 'none',
-  //   navigationOptions: {
-  //     headerVisible: false,
-  //   },
-  // });
+
+  // TODO create consumer
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
 
   return (
-    <Provider store={store}>
-      <NavigationContainer>
-        <Stack.Navigator  screenOptions={{ headerShown: false }} initialRouteName="sample">
-          <Stack.Screen name="sample" component={SimpleSample} />
-          <Stack.Screen name="form" component={EncounterForm} />
-          <Stack.Screen name="result" component={EncounterResult} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </Provider>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName={'sample'} screenOptions={{ headerShown: false }}>
+        <Stack.Screen component={SimpleSample} name={'sample'} />
+        <Stack.Screen component={EncounterForm} name={'form'} />
+        <Stack.Screen component={EncounterResult} name={'result'} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }

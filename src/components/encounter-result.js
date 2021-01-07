@@ -6,36 +6,34 @@ import MonsterList from './monster-list';
 import LargeButton from './large-button';
 import BackButton from './back-button';
 import Overview from './overview';
-import { connect } from 'react-redux';
-import { createEncounter } from '../state/actions';
 import { ScreenWrapper } from './screen-wrapper';
 
-export function EncounterResult({
+export default function EncounterResult({
   navigation,
   request,
   result,
   dispatchRecreateEncounter,
- }) {
+}) {
   const regenerateResult = () => {
-    console.log("Regen! Still TODO");
+    console.log('Regen! Still TODO');
     dispatchRecreateEncounter(request);
   };
-  
+
   return (
     <ScreenWrapper>
       <View style={styles.container}>
-        <BackButton 
-          onPress={() => navigation.navigate('form')}
+        <BackButton
           buttonStyles={styles.backButton}
+          onPress={() => navigation.navigate('form')}
         />
         <PageTitle title={'Results'}/>
-        <Overview 
+        <Overview
           difficulty={result.difficulty}
-          experienceTotal={result.experienceTotal}
           experiencePerPlayer={result.experiencePerPlayer}
+          experienceTotal={result.experienceTotal}
         />
         <MonsterList monsterList={result.monsters}/>
-        <LargeButton title={'Regenerate'} onPress={regenerateResult}/>
+        <LargeButton onPress={regenerateResult} title={'Regenerate'}/>
       </View>
     </ScreenWrapper>
   );
@@ -64,13 +62,3 @@ EncounterResult.propTypes = {
   result: PropTypes.object.isRequired,
   dispatchRecreateEncounter: PropTypes.func.isRequired,
 };
-
-export default connect(
-  (state) => ({
-    request: state.request,
-    result: state.result,
-  }),
-  (dispatch) => ({
-    dispatchRecreateEncounter: (request) => dispatch(createEncounter(request)),
-  })
-)(EncounterResult);
