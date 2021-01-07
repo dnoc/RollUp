@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import PropTypes from 'prop-types';
 import PageTitle from './page-title';
@@ -7,16 +7,18 @@ import LargeButton from './large-button';
 import BackButton from './back-button';
 import Overview from './overview';
 import { ScreenWrapper } from './screen-wrapper';
+import RequestContext from '../contexts/request-context';
+import EncounterService from '../services/encounter-service';
 
 export default function EncounterResult({
   navigation,
-  request,
-  result,
-  dispatchRecreateEncounter,
 }) {
-  const regenerateResult = () => {
-    console.log('Regen! Still TODO');
-    dispatchRecreateEncounter(request);
+  const [request, ] = useContext(RequestContext);
+
+  const [result, setResult] = useState(EncounterService.generateEncounter(request));
+
+  const regenResult = () => {
+    setResult(EncounterService.generateEncounter(request));
   };
 
   return (
@@ -33,7 +35,7 @@ export default function EncounterResult({
           experienceTotal={result.experienceTotal}
         />
         <MonsterList monsterList={result.monsters}/>
-        <LargeButton onPress={regenerateResult} title={'Regenerate'}/>
+        <LargeButton onPress={regenResult} title={'Regenerate'}/>
       </View>
     </ScreenWrapper>
   );
@@ -58,7 +60,4 @@ const styles = StyleSheet.create({
 
 EncounterResult.propTypes = {
   navigation: PropTypes.object.isRequired,
-  request: PropTypes.object.isRequired,
-  result: PropTypes.object.isRequired,
-  dispatchRecreateEncounter: PropTypes.func.isRequired,
 };
