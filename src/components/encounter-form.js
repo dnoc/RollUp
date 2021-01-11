@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Dropdown } from 'react-native-material-dropdown';
 import PageTitle from './page-title';
 import LargeButton from './large-button';
-import { difficultyData, settingData, enemyTypeData } from '../constants';
+import { difficultyData, settingData, enemyTypeData } from '../data/field-values';
 import RequestContext from '../contexts/request-context';
 
 export default function EncounterForm({
@@ -43,7 +43,7 @@ export default function EncounterForm({
         maxLength={2}
         onChange={setNumberOfPlayers}
         placeholder={'Number of players'}
-        style={[styles.players, styles.formItem]}
+        style={styles.formItem}
       />
       <View style={styles.formItem}>
         <Text>Character Level</Text>
@@ -51,26 +51,25 @@ export default function EncounterForm({
           maximumValue={20}
           minimumValue={1}
           onChange={setPlayerLevel}
-          style={styles.level}
         />
       </View>
       <Dropdown
         data={difficultyData}
         label={'Difficulty'}
         onChange={setDifficulty}
-        style={[styles.dropdown, styles.formItem]}
+        style={styles.formItem}
       />
       <Dropdown
         data={settingData}
         label={'Encounter Setting'}
         onChange={setSetting}
-        style={[styles.dropdown, styles.formItem]}
+        style={styles.formItem}
       />
       <Dropdown
         data={enemyTypeData}
         label={'Enemy Type'}
         onChange={setEnemyType}
-        style={[styles.dropdown, styles.formItem]}
+        style={styles.formItem}
       />
       <LargeButton
         disabled={submitDisabled}
