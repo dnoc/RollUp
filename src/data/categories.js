@@ -7,10 +7,11 @@ export const Difficulties = {
 
 export const Settings = {
   CITY: 'City',
+  DUNGEON: 'Dungeon',
+  FEYWILD: 'Feywild',
   FOREST: 'Forest',
   MOUNTAIN: 'Mountain',
   OCEAN: 'Ocean',
-  DUNGEON: 'Dungeon',
 };
 
 export const EnemyTypes = {

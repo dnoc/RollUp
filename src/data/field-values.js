@@ -9,14 +9,15 @@ export const difficultyData = [
 
 export const settingData = [
   { label: 'City', value: Settings.CITY, },
+  { label: 'Dungeon', value: Settings.DUNGEON, },
+  { label: 'Feywild', value: Settings.FEYWILD, },
   { label: 'Forest', value: Settings.FOREST, },
   { label: 'Mountain', value: Settings.MOUNTAIN, },
   { label: 'Ocean', value: Settings.OCEAN, },
-  { label: 'Dungeon', value: Settings.DUNGEON, },
 ];
 
 export const enemyTypeData = Object.values(EnemyTypes).map((type) => {
   return {
     value: type,
-  }; 
+  };
 });

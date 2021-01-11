@@ -6,7 +6,7 @@ import MonsterList from './monster-list';
 import LargeButton from './large-button';
 import BackButton from './back-button';
 import Overview from './overview';
-import { ScreenWrapper } from './screen-wrapper';
+import ScreenWrapper from './screen-wrapper';
 import RequestContext from '../contexts/request-context';
 import EncounterService from '../services/encounter-service';
 

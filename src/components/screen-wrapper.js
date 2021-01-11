@@ -3,8 +3,7 @@ import { StyleSheet, View, ImageBackground } from 'react-native';
 import PropTypes from 'prop-types';
 import StainBackground from '../../assets/stain-background.png';
 
-export function ScreenWrapper({ children }) {
-
+export default function ScreenWrapper({ children }) {
   return (
     <ImageBackground
       source={StainBackground}

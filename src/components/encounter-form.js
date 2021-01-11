@@ -5,6 +5,7 @@ import { Dropdown } from 'react-native-material-dropdown';
 import PageTitle from './page-title';
 import LargeButton from './large-button';
 import { difficultyData, settingData, enemyTypeData } from '../data/field-values';
+import ScreenWrapper from './screen-wrapper';
 import RequestContext from '../contexts/request-context';
 
 export default function EncounterForm({
@@ -33,50 +34,52 @@ export default function EncounterForm({
   };
 
   return (
-    <View style={styles.container}>
-      <PageTitle
-        subtitle={'Generate your encounter'}
-        title={'Roll Up!'}
-      />
-      <TextInput
-        keyboardType={'number-pad'}
-        maxLength={2}
-        onChange={setNumberOfPlayers}
-        placeholder={'Number of players'}
-        style={styles.formItem}
-      />
-      <View style={styles.formItem}>
-        <Text>Character Level</Text>
-        <Slider
-          maximumValue={20}
-          minimumValue={1}
-          onChange={setPlayerLevel}
+    <ScreenWrapper>
+      <View style={styles.container}>
+        <PageTitle
+          subtitle={'Generate your encounter'}
+          title={'Roll Up!'}
+        />
+        <TextInput
+          keyboardType={'number-pad'}
+          maxLength={2}
+          onChange={setNumberOfPlayers}
+          placeholder={'Number of players'}
+          style={styles.formItem}
+        />
+        <View style={styles.formItem}>
+          <Text>Character Level</Text>
+          <Slider
+            maximumValue={20}
+            minimumValue={1}
+            onChange={setPlayerLevel}
+          />
+        </View>
+        <Dropdown
+          data={difficultyData}
+          label={'Difficulty'}
+          onChange={setDifficulty}
+          style={styles.formItem}
+        />
+        <Dropdown
+          data={settingData}
+          label={'Encounter Setting'}
+          onChange={setSetting}
+          style={styles.formItem}
+        />
+        <Dropdown
+          data={enemyTypeData}
+          label={'Enemy Type'}
+          onChange={setEnemyType}
+          style={styles.formItem}
+        />
+        <LargeButton
+          disabled={submitDisabled}
+          onPress={onSubmit}
+          title={'Generate'}
         />
       </View>
-      <Dropdown
-        data={difficultyData}
-        label={'Difficulty'}
-        onChange={setDifficulty}
-        style={styles.formItem}
-      />
-      <Dropdown
-        data={settingData}
-        label={'Encounter Setting'}
-        onChange={setSetting}
-        style={styles.formItem}
-      />
-      <Dropdown
-        data={enemyTypeData}
-        label={'Enemy Type'}
-        onChange={setEnemyType}
-        style={styles.formItem}
-      />
-      <LargeButton
-        disabled={submitDisabled}
-        onPress={onSubmit}
-        title={'Generate'}
-      />
-    </View>
+    </ScreenWrapper>
   );
 }
 
