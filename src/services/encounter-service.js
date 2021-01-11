@@ -1,4 +1,4 @@
-import { mockData } from '../constants';
+import { mockData } from '../data/constants';
 
 export default class EncounterService {
   static generateEncounter(request) {
