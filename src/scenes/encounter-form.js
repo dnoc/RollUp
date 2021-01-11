@@ -1,19 +1,22 @@
 import React, { useContext, useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Slider } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import PropTypes from 'prop-types';
-import { Dropdown } from 'react-native-material-dropdown';
-import PageTitle from './page-title';
-import LargeButton from './large-button';
-import { difficultyData, settingData, enemyTypeData } from '../data/field-values';
-import ScreenWrapper from './screen-wrapper';
+import PageTitle from '../components/page-title';
+import LargeButton from '../components/large-button';
+import { Difficulties, Settings, EnemyTypes } from '../data/categories';
+import Slider from '@react-native-community/slider';
+import ScreenWrapper from '../components/screen-wrapper';
 import RequestContext from '../contexts/request-context';
+import Picker from '../components/picker';
+import Colors from '../colors';
 
 export default function EncounterForm({
   navigation,
 }) {
   const [request, setRequest] = useContext(RequestContext);
 
-  const [submitDisabled, setSubmitDisabled] = useState(false);
+  // TODO don't default request values, disable submit until form is complete
+  // const [submitDisabled, setSubmitDisabled] = useState(false);
   const [numberOfPlayers, setNumberOfPlayers] = useState(request.numberOfPlayers);
   const [playerLevel, setPlayerLevel] = useState(request.playerLevel);
   const [difficulty, setDifficulty] = useState(request.difficulty);
@@ -21,8 +24,6 @@ export default function EncounterForm({
   const [enemyType, setEnemyType] = useState(request.enemyType);
 
   const onSubmit = () => {
-    setSubmitDisabled(true);
-
     setRequest({
       numberOfPlayers: numberOfPlayers,
       playerLevel: playerLevel,
@@ -40,41 +41,47 @@ export default function EncounterForm({
           subtitle={'Generate your encounter'}
           title={'Roll Up!'}
         />
-        <TextInput
-          keyboardType={'number-pad'}
-          maxLength={2}
-          onChange={setNumberOfPlayers}
-          placeholder={'Number of players'}
-          style={styles.formItem}
-        />
         <View style={styles.formItem}>
-          <Text>Character Level</Text>
+          <Text style={styles.sliderLabel}>Number of players: {numberOfPlayers}</Text>
           <Slider
-            maximumValue={20}
+            maximumTrackTintColor={Colors.opaqueGrey()}
+            maximumValue={10}
+            minimumTrackTintColor={'black'}
             minimumValue={1}
-            onChange={setPlayerLevel}
+            onValueChange={setNumberOfPlayers}
+            step={1}
           />
         </View>
-        <Dropdown
-          data={difficultyData}
+        <View style={styles.formItem}>
+          <Text style={styles.sliderLabel}>Character Level: {playerLevel}</Text>
+          <Slider
+            maximumTrackTintColor={Colors.opaqueGrey()}
+            maximumValue={20}
+            minimumTrackTintColor={'black'}
+            minimumValue={1}
+            onValueChange={setPlayerLevel}
+            step={1}
+          />
+        </View>
+        <Picker
           label={'Difficulty'}
-          onChange={setDifficulty}
+          onSelect={setDifficulty}
+          options={Object.values(Difficulties)}
           style={styles.formItem}
         />
-        <Dropdown
-          data={settingData}
+        <Picker
           label={'Encounter Setting'}
-          onChange={setSetting}
+          onSelect={setSetting}
+          options={Object.values(Settings)}
           style={styles.formItem}
         />
-        <Dropdown
-          data={enemyTypeData}
+        <Picker
           label={'Enemy Type'}
-          onChange={setEnemyType}
+          onSelect={setEnemyType}
+          options={Object.values(EnemyTypes)}
           style={styles.formItem}
         />
         <LargeButton
-          disabled={submitDisabled}
           onPress={onSubmit}
           title={'Generate'}
         />
@@ -98,5 +105,10 @@ const styles = StyleSheet.create({
   },
   formItem: {
     marginBottom: 18,
+  },
+  sliderLabel: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: Colors.bookRed(),
   },
 });

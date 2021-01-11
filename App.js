@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import EncounterForm from './src/components/encounter-form';
-import EncounterResult from './src/components/encounter-result';
-import SimpleSample from './src/components/simple-sample';
+import EncounterForm from './src/scenes/encounter-form';
+import EncounterResult from './src/scenes/encounter-result';
+import SimpleSample from './src/scenes/simple-sample';
 import EncounterRequest from './src/models/encounter-request';
 import { useFonts } from 'expo-font';
 import { NavigationContainer } from '@react-navigation/native';

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, Text, View } from 'react-native';
 import Divider from './divider';
+import Colors from '../colors';
 
 export default function PageTitle({ title, subtitle }) {
 
@@ -30,7 +31,7 @@ const styles = StyleSheet.create({
     fontSize: 55,
     fontWeight: '800',
     // fontFamily: 'nodesto-caps-condensed',
-    color: '#58170D',
+    color: Colors.bookRed(),
   },
   subtitle: {
     fontSize: 16,

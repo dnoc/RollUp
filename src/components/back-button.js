@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Image, TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 import LeftArrow from '../../assets/arrow-left.png';
+import Colors from '../colors';
 
 export default function BackButton({ onPress, buttonStyles }) {
 
@@ -27,6 +28,6 @@ const styles = StyleSheet.create({
   icon: {
     width: 25,
     height: 25,
-    tintColor: '#58170D',
+    tintColor: Colors.bookRed(),
   },
 });

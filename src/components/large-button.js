@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import Colors from '../colors';
 
 export default function LargeButton({ disabled = false, title, onPress, buttonStyles }) {
   return (
@@ -24,8 +25,8 @@ LargeButton.propTypes = {
 const styles = StyleSheet.create({
   button: {
     alignSelf: 'center',
-    backgroundColor: '#58170D',
-    width: '80%',
+    backgroundColor: Colors.bookRed(),
+    width: '100%',
     borderRadius: 8,
     marginTop: 20,
   },

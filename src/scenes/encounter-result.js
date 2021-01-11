@@ -1,12 +1,12 @@
 import React, { useContext, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import PropTypes from 'prop-types';
-import PageTitle from './page-title';
-import MonsterList from './monster-list';
-import LargeButton from './large-button';
-import BackButton from './back-button';
-import Overview from './overview';
-import ScreenWrapper from './screen-wrapper';
+import PageTitle from '../components/page-title';
+import MonsterList from '../components/monster-list';
+import LargeButton from '../components/large-button';
+import BackButton from '../components/back-button';
+import Overview from '../components/overview';
+import ScreenWrapper from '../components/screen-wrapper';
 import RequestContext from '../contexts/request-context';
 import EncounterService from '../services/encounter-service';
 
@@ -26,7 +26,7 @@ export default function EncounterResult({
       <View style={styles.container}>
         <BackButton
           buttonStyles={styles.backButton}
-          onPress={() => navigation.navigate('form')}
+          onPress={() => navigation.goBack()}
         />
         <PageTitle title={'Results'}/>
         <Overview
